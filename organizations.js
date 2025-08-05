@@ -152,7 +152,7 @@ const organizations = {
         website: 'www.imarikasacco.co.ke',
         region: 'Kilifi,Mombasa County,Kwale County ,Lamu County and Tana River'
     },
-    'u&i-mfb': {
+    'ui-mfb': {
         name: 'U&I MFB ',
         address: 'Thika Arcade Building – Ground Floor, P.O Box 15825-00100, G.P.O Nairobi',
         phone: '+254 713 112 791',
