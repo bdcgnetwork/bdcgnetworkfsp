@@ -96,7 +96,7 @@ const organizations = {
         website: 'www.nyarimisacco.com',
         region: 'Meru'
     },
-    'juhudi-kilimo ': {
+    'juhudi-kilimo': {
         name: 'Juhudi Kilimo',
         address: 'Headquarters: The Priory, 2nd floor, Argwings Kodhek Road,P.O Box 25441-00100, Nairobi.',
         phone: '+254 709 69 20 00',
@@ -176,7 +176,7 @@ const organizations = {
         website: 'www.tenhossacco.co.ke',
         region: 'Bomet'
     },
-    'asili-sacco ': {
+    'asili-sacco': {
         name: 'Asili Sacco',
         address: 'Asili Sacco Society Limited, Ngara Road, Nairobi Kenya',
         phone: '+254 730 785 500',
