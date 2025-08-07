@@ -1,284 +1,124 @@
 // Organization data
 const organizations = {
-    'samuel-cheburet': {
-        name: 'Samuel K. Cheburet',
-        address: '',
-        phone: '+254 722 574 558',
-        email: '',
-        website: '',
-        organztn: 'Rongai Acacia Dairy Coop Society'
+    'biofarms-limited': {
+        name: 'Biofarms Limited',
+        address: 'Export vegetables and Avocado',
+        phone: 'Office: +254 020 440 2874 Mobile: +254 720 618140',
+        email: 'danieln@biofarms.co.ke, info@biofarms.co.ke',
+        website: 'www.biofarms.co.ke',
+        organztn: 'Uasin Gishu and Trans Nzoia'
     },
-    'ruth-namale': {
-        name: 'Ruth Namale',
-        address: '',
-        phone: '+254 718 882 429',
-        email: '',
+    'keitt-exporters': {
+        name: 'Keitt Exporters',
+        address: 'Export vegetables,Avocado and Mango',
+        phone: 'Mobile Asif: 0722 344889, Mobile Francis: 0721359547',
+        email: 'production@keitt.co.ke, technical@keitt.co.ke, gichuru@keitt.co.ke',
         website: '',
-        organztn: 'Ruana Agribusiness Consultants'
+        organztn: 'Uasin Gishu and Trans Nzoia,Makueni,Machakos,Nakuru,Nyandarua'
     },
-    'brenda-kiboi': {
-        name: 'Brenda Kiboi',
-        address: '',
-        phone: '+254 721 818 998',
-        email: '',
+    'vegPro-kenya-ltd': {
+        name: 'VegPro Kenya Ltd',
+        address: 'Export vegetables and Avocado',
+        phone: 'Mobile Patel: 0722509818, Mobile John: 0729555499',
+        email: 'apatel@vegpro-group.com, john.kirunja@vegpro-group.com',
         website: '',
-        organztn: 'Elgon Fish Farm'
+        organztn: 'Uasin Gishu and Trans Nzoia'
     },
-    'mary-mathuli': {
-        name: 'Mary Mathuli',
-        address: '',
+    'vert-limited': {
+        name: 'Vert Limited',
+        address: 'Export vegetables, passion/Mango',
         phone: '+254 702 572 778',
-        email: '',
+        email: 'info@vertfresh.co.ke, jane.maina@vertfresh.co.ke',
         website: '',
-        organztn: 'Ketrima Investments'
+        organztn: 'Makueni/Machakos/Nyandarua'
     },
-    'morgan-mwamuye': {
-        name: 'Morgan Mwamuye',
-        address: '',
-        phone: '+254 704 161 831',
-        email: '',
+    'east-africa-grower': {
+        name: 'East Africa Grower',
+        address: 'Export vegetable',
+        phone: 'Veronica- 0733604897',
+        email: 'veronicahm@eaga.co.ke',
         website: '',
-        organztn: 'Operations Manager Cocovita Limited'
+        organztn: 'Nyandarua'
     },
-    'ravindra-patel': {
-        name: 'Ravindra Patel',
-        address: '',
-        phone: '+254 701 895 337',
+    'lianFarm-africa-limited': {
+        name: 'LianFarm Africa Limited',
+        address: 'Indigenous chicken',
+        phone: '',
         email: '',
         website: '',
-        organztn: 'Milly Fruits LTD'
+        organztn: 'Kakamega and Bungoma'
     },
-    'jeremiah-kimeli': {
-        name: 'Jeremiah Kimeli',
-        address: '',
-        phone: '+254 714 266 736',
-        email: '',
+    'ktl-farming-limited': {
+        name: 'KTL Farming Limited',
+        address: 'Avocado',
+        phone: 'Mobile: 0728745121',
+        email: 'ktlfarm2014@gmail.com',
         website: '',
-        organztn: 'Natures Touch Limited'
+        organztn: 'Bungoma and Trans Nzoia'
     },
-    'holystar-kibet': {
-        name: 'Holystar Kibet',
-        address: '',
-        phone: '+254 710 591 829',
-        email: '',
+    'elgon-farms-limited': {
+        name: 'Elgon Farms Limited',
+        address: 'Fingerlings, mature fish',
+        phone: 'Mobile: 0722267597',
+        email: 'sfarmproduce@gmail.com',
         website: '',
-        organztn: 'KTL Farming LTD'
+        organztn: 'Bungioma and Trans Nzoia'
     },
-    'laban-mwanzo': {
-        name: 'Laban Mwanzo',
-        address: '',
-        phone: '+254 722 565 686',
-        email: '',
+    'kentaste-products': {
+        name: 'KENTASTE PRODUCTS LTD',
+        address: 'Coconut',
+        phone: '0721633424',
+        email: 'info@kentaste.com, betty@ kentaste.com',
         website: '',
-        organztn: 'Labedcash Marine'
+        organztn: 'Kwale'
     },
-    'mark-mbithi': {
-        name: 'Mark Mbithi',
-        address: '',
-        phone: '+254 726 656 783',
-        email: '',
+    'cocovita-processors': {
+        name: 'Cocovita (processors)',
+        address: 'Coconut',
+        phone: '0728604471',
+        email: 'joanatamba@cocovita.co.ke',
         website: '',
-        organztn: 'Labedcash Marine'
+        organztn: 'Kilifi'
     },
-    'joanne-muchai': {
-        name: 'Joanne Muchai',
-        address: '',
-        phone: '+254 704 983 787',
-        email: '',
+    'akamba-poultry': {
+        name: 'Akamba Poultry Traders(Processor)',
+        address: 'Indigenous  chicken',
+        phone: '0723173951',
+        email: 'Leonardokioko123@gmail.com',
         website: '',
-        organztn: 'Kentaste'
+        organztn: 'Coast, Eastern, Siaya, Busia, Migori, Kakamega, Machakos'
     },
-    'phyllis-katuka-nduva': {
-        name: 'Phyllis Katuka Nduva',
-        address: '',
-        phone: '+254 724 224 454',
-        email: '',
+    'burton-bamber': {
+        name: 'Burton Bamber',
+        address: 'Mango/ Avocadoes/Vegetables',
+        phone: '0701052351',
+        email: 'ofelia@burtonandbamber.com',
         website: '',
-        organztn: 'MCFP Co-op'
+        organztn: 'Eastern'
     },
-    'alfred-ringine': {
-        name: 'Alfred Ringine',
-        address: '',
-        phone: '+254 722 393 249',
-        email: '',
+    'goshen-farm': {
+        name: 'Goshen Farm Exporters ltd',
+        address: 'Indigenous  chickenMango, Export vegetables, passion',
+        phone: '0722 555484',
+        email: 'mary@goshen.co.ke  or info@goshen.co.ke',
         website: '',
-        organztn: 'East African Growers ltd'
+        organztn: 'Makueni/Machakos'
     },
-    'khilna-dave': {
-        name: 'Khilna Dave',
-        address: '',
-        phone: '+254 784 049 665',
-        email: '',
+    'kandia-fresh': {
+        name: 'Kandia Fresh Produce Suppliers Ltd',
+        address: 'Export vegetables, passion',
+        phone: '0203500866, 0722857142',
+        email: 'david@kandia.co.ke',
         website: '',
-        organztn: 'P.J Dave Flowers'
+        organztn: 'Makueni/Machakos'
     },
-    'somoye-otieno': {
-        name: 'Somoye Otieno',
-        address: '',
-        phone: '+254 700 320 250',
+    'labedcash-marine': {
+        name: 'Labedcash Marine Enterprises Limited',
+        address: 'quality fish and fingerling production; fish accessories',
+        phone: '0722 565 686',
         email: '',
         website: '',
-        organztn: 'Fruityard LTD'
-    },
-    'joram-gitonga': {
-        name: 'Joram Gitonga N',
-        address: '',
-        phone: '+254 712 096 437',
-        email: '',
-        website: '',
-        organztn: 'Tulaga FCS'
-    },
-    'leornado-kioko': {
-        name: 'Leornado M. Kioko',
-        address: '',
-        phone: '+254 723 173 951',
-        email: '',
-        website: '',
-        organztn: 'Akamba Poultry Traders'
-    },
-    'emmanuel-muniu': {
-        name: 'Emmanuel Muniu',
-        address: '',
-        phone: '+254 721 261 980',
-        email: '',
-        website: '',
-        organztn: 'Renman Africa Ltd.'
-    },
-    'atul-patel': {
-        name: 'Atul B. Patel',
-        address: '',
-        phone: '+254 722 509 818',
-        email: '',
-        website: '',
-        organztn: 'Vegpro (K) Ltd'
-    },
-    'david-mulwa': {
-        name: 'David Mulwa',
-        address: '',
-        phone: '+254 722 857 142',
-        email: '',
-        website: '',
-        organztn: 'Kandia FPS LTD'
-    },
-    'sarah-onchangu': {
-        name: 'Sarah Onchangu',
-        address: '',
-        phone: '+254 757 707 063',
-        email: '',
-        website: '',
-        organztn: 'Boka eats Ltd'
-    },
-    'elias-mabiria': {
-        name: 'Elias Mabiria',
-        address: '',
-        phone: '+254 727 377 489',
-        email: '',
-        website: '',
-        organztn: 'Boka eats Ltd'
-    },
-    'lilian-serenge': {
-        name: 'Lilian Serenge',
-        address: '',
-        phone: '+254 728 251 728',
-        email: '',
-        website: '',
-        organztn: 'Lian Farm'
-    },
-    'sally-kweyu': {
-        name: 'Sally Kweyu',
-        address: '',
-        phone: '+254 718 672 026',
-        email: '',
-        website: '',
-        organztn: 'Lian Farm'
-    },
-    'lucy-namu': {
-        name: 'Lucy Namu',
-        address: '',
-        phone: '+254 726 649 826',
-        email: '',
-        website: '',
-        organztn: 'KENAS'
-    },
-    'robert-kirui': {
-        name: 'Robert Kirui',
-        address: '',
-        phone: '+254 728 277 057',
-        email: '',
-        website: '',
-        organztn: 'Habex Agro LTD'
-    },
-    'karen-ndulu': {
-        name: 'Karen Ndulu',
-        address: '',
-        phone: '+254 726 869 056',
-        email: '',
-        website: '',
-        organztn: 'AthiFarm Expoters LTD'
-    },
-    'michael-makokha': {
-        name: 'Dr. Michael Makokha',
-        address: '',
-        phone: '+254 722 328 563',
-        email: '',
-        website: '',
-        organztn: 'Western Deluxe Maize Co Ltd'
-    },
-    'dipesh-derray': {
-        name: 'Dipesh Derray',
-        address: '',
-        phone: '+254 722 204 391',
-        email: '',
-        website: '',
-        organztn: 'KEITT'
-    },
-    'janet-chumo': {
-        name: 'Janet Chumo',
-        address: '',
-        phone: '+254 725 561 051',
-        email: '',
-        website: '',
-        organztn: 'Keringet Foods'
-    },
-    'john-muriithi': {
-        name: 'John Muriithi',
-        address: '',
-        phone: '+254 713 355 261',
-        email: '',
-        website: '',
-        organztn: 'Papa Farmers Ltd'
-    },
-    'alex-muli': {
-        name: 'Alex Muli',
-        address: '',
-        phone: '+254 722 927 819',
-        email: '',
-        website: '',
-        organztn: 'Goshen Farm Exporters'
-    },
-    'ofelia-burton': {
-        name: 'Ofelia Burton',
-        address: '',
-        phone: '+254 701 052 351',
-        email: '',
-        website: '',
-        organztn: 'Burton & Bumber'
-    },
-    'martha-musyoka': {
-        name: 'Martha Musyoka',
-        address: '',
-        phone: '+254 724 322 207',
-        email: '',
-        website: '',
-        organztn: 'Biofarms LTD'
-    },
-    'jane-maina': {
-        name: 'Jane Maina',
-        address: '',
-        phone: '+254 722 749 890',
-        email: '',
-        website: '',
-        organztn: 'Vert Ltd'
+        organztn: 'Kakamega'
     }
 };
 
@@ -288,11 +128,11 @@ function renderOrganization(org) {
         <div class="contact-section">
             <h2 class="org-name">${org.name}</h2>
             <div class="contact-info">
-                <!--<p><strong>Address:</strong> ${org.address}</p>-->
+                <p><strong>Products:</strong> ${org.address}</p>
                 <p><strong>Phone:</strong> ${org.phone}</p>
-                <!--<p><strong>Email:</strong> ${org.email}</p>-->
+                <p><strong>Email:</strong> ${org.email}</p>
                 <!--<p><strong>Website:</strong><a href="https://${org.website}"> ${org.website}</a></p>-->
-                <p><strong>Organization:</strong> ${org.organztn}</p>
+                <p><strong>County:</strong> ${org.organztn}</p>
             </div>
         </div>
     `;
