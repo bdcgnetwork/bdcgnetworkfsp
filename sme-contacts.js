@@ -40,7 +40,7 @@ const organizations = {
         website: '',
         organztn: 'Nyandarua'
     },
-    'lianFarm-africa-limited': {
+    'lianfarm-africa-limited': {
         name: 'LianFarm Africa Limited',
         address: 'Indigenous chicken',
         phone: '',
