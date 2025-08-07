@@ -279,7 +279,7 @@
     <div class="page-progress" id="page-progress"></div>
     
     <div class="header">
-        <h1 class="title">📄 Annual Report 2024</h1>
+        <h1 class="title">📄 Document Viewer</h1>
         
         <div class="controls">
             <div class="document-info" id="document-info">
@@ -318,6 +318,8 @@
                 this.renderedPages = new Map();
                 this.totalPages = 0;
                 this.currentViewPage = 1;
+                this.progressUpdatePending = false;
+                this.isRendering = false;
                 
                 // Replace with your PDF file path
                 this.pdfPath = 'AnnualReport2024.pdf';
@@ -374,12 +376,17 @@
             }
             
             async renderAllPages() {
+                if (this.isRendering) return;
+                this.isRendering = true;
+                
                 this.viewer.innerHTML = '';
+                this.renderedPages.clear();
                 
                 for (let pageNum = 1; pageNum <= this.totalPages; pageNum++) {
                     await this.renderPage(pageNum);
                 }
                 
+                this.isRendering = false;
                 this.updateProgress();
             }
             
@@ -418,29 +425,37 @@
             updateProgress() {
                 if (!this.viewer || this.totalPages === 0) return;
                 
-                const scrollTop = this.viewer.scrollTop;
-                const scrollHeight = this.viewer.scrollHeight - this.viewer.clientHeight;
-                const progress = Math.min((scrollTop / scrollHeight) * 100, 100);
+                // Use requestAnimationFrame to throttle scroll updates
+                if (this.progressUpdatePending) return;
+                this.progressUpdatePending = true;
                 
-                this.pageProgress.style.width = `${progress}%`;
-                
-                // Update current page based on scroll position
-                const pages = this.viewer.querySelectorAll('.pdf-page');
-                let currentPage = 1;
-                
-                pages.forEach((page, index) => {
-                    const rect = page.getBoundingClientRect();
-                    const viewerRect = this.viewer.getBoundingClientRect();
+                requestAnimationFrame(() => {
+                    const scrollTop = this.viewer.scrollTop;
+                    const scrollHeight = this.viewer.scrollHeight - this.viewer.clientHeight;
+                    const progress = scrollHeight > 0 ? Math.min((scrollTop / scrollHeight) * 100, 100) : 0;
                     
-                    if (rect.top <= viewerRect.top + 100) {
-                        currentPage = index + 1;
+                    this.pageProgress.style.width = `${progress}%`;
+                    
+                    // Update current page based on scroll position (throttled)
+                    const pages = this.viewer.querySelectorAll('.pdf-page');
+                    let currentPage = 1;
+                    
+                    pages.forEach((page, index) => {
+                        const rect = page.getBoundingClientRect();
+                        const viewerRect = this.viewer.getBoundingClientRect();
+                        
+                        if (rect.top <= viewerRect.top + 100) {
+                            currentPage = index + 1;
+                        }
+                    });
+                    
+                    if (currentPage !== this.currentViewPage) {
+                        this.currentViewPage = currentPage;
+                        this.documentInfo.textContent = `Page ${currentPage} of ${this.totalPages}`;
                     }
+                    
+                    this.progressUpdatePending = false;
                 });
-                
-                if (currentPage !== this.currentViewPage) {
-                    this.currentViewPage = currentPage;
-                    this.documentInfo.textContent = `Page ${currentPage} of ${this.totalPages}`;
-                }
             }
             
             showLoading() {
@@ -472,19 +487,21 @@
             }
             
             async zoomIn() {
+                if (this.isRendering) return;
                 this.scale = Math.min(this.scale * 1.25, 3.0);
                 this.updateZoomDisplay();
                 await this.renderAllPages();
             }
             
             async zoomOut() {
+                if (this.isRendering) return;
                 this.scale = Math.max(this.scale * 0.8, 0.5);
                 this.updateZoomDisplay();
                 await this.renderAllPages();
             }
             
             async fitToWidth() {
-                if (!this.pdfDoc) return;
+                if (!this.pdfDoc || this.isRendering) return;
                 
                 const viewerWidth = this.viewer.clientWidth - 64; // Account for padding
                 const page = await this.pdfDoc.getPage(1);
@@ -522,10 +539,10 @@
             handleResize() {
                 clearTimeout(this.resizeTimeout);
                 this.resizeTimeout = setTimeout(() => {
-                    if (this.pdfDoc) {
+                    if (this.pdfDoc && !this.isRendering) {
                         this.renderAllPages();
                     }
-                }, 250);
+                }, 500); // Increased debounce time
             }
         }
         
