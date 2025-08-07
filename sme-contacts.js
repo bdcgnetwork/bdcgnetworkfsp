@@ -16,7 +16,7 @@ const organizations = {
         website: '',
         organztn: 'Uasin Gishu and Trans Nzoia,Makueni,Machakos,Nakuru,Nyandarua'
     },
-    'vegPro-kenya-ltd': {
+    'vegpro-kenya-ltd': {
         name: 'VegPro Kenya Ltd',
         address: 'Export vegetables and Avocado',
         phone: 'Mobile Patel: 0722509818, Mobile John: 0729555499',
