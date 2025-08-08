@@ -154,7 +154,124 @@
             transform: translateX(4px);
         }
 
-        /* PDF Viewer Styles */
+        /* Document List Page Styles */
+        .document-list-page {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .document-list-page.active {
+            display: flex;
+        }
+
+        .documents-list-container {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .list-subtitle {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .documents-list {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .document-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .document-item:hover::before {
+            left: 100%;
+        }
+
+        .document-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .document-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .document-details {
+            flex: 1;
+        }
+
+        .document-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .document-description {
+            color: #657786;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .document-arrow {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            min-width: 40px;
+        }
+
+        .document-item:hover .document-arrow {
+            transform: translateX(4px);
+        }
         .pdf-viewer-page {
             display: none;
             flex-direction: column;
@@ -479,7 +596,7 @@
             <div class="grid-container">
                 <div class="document-card" onclick="openDocument('doc1', 'Annual Report 2024', 'AnnualReport2024.pdf')">
                     <span class="card-icon">📊</span>
-                    <h3 class="card-title">Annual Report</h3>
+                    <h3 class="card-title">Annual Report 2024</h3>
                     <p class="card-description">Annual Report 2024 - Comprehensive overview of our company's performance, achievements, and financial highlights from the past year.</p>
                     <div class="card-footer">
                         <span class="card-type">Annual Report</span>
@@ -487,24 +604,47 @@
                     </div>
                 </div>
                 
-                <div class="document-card" onclick="openDocument('doc2', 'Mespt Profile', 'profile.pdf')">
+                <div class="document-card" onclick="openDocument('doc2', 'Company Profile', 'CompanyProfile2024.pdf')">
                     <span class="card-icon">🏢</span>
-                    <h3 class="card-title">Mespt Profile</h3>
-                    <p class="card-description">Mespt Profile - Forward-looking document outlining our vision, objectives, and roadmap for sustainable growth.</p>
+                    <h3 class="card-title">MESPT Profile</h3>
+                    <p class="card-description">MESPT Profile - The MESPT Profile presents the organization’s mandate, achievements, and it programmes.</p>
                     <div class="card-footer">
-                        <span class="card-type">Profile</span>
+                        <span class="card-type">MESPT Profile</span>
                         <div class="card-arrow">→</div>
                     </div>
                 </div>
                 
-                <div class="document-card" onclick="openDocument('doc3', 'Value Chain Manual and Guides', 'valuechain.pdf')">
+                <div class="document-card" onclick="openDocumentList('value-chain', 'Value Chain Manuals and Guides')">
                     <span class="card-icon">⛓️</span>
-                    <h3 class="card-title">Value Chain Manual and Guides</h3>
-                    <p class="card-description">Value Chain Manual and Guides - </p>
+                    <h3 class="card-title">Value Chain Manuals and Guides</h3>
+                    <p class="card-description">Value Chain Manuals and Guides - These are training and reference materials for various value chains.</p>
                     <div class="card-footer">
-                        <span class="card-type">Manual and Guides</span>
+                        <span class="card-type">Value Chain Manuals and Guides</span>
                         <div class="card-arrow">→</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document List Page -->
+    <div class="document-list-page" id="document-list-page">
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBackToLanding()">
+                    ← Back
+                </button>
+                <h1 class="title" id="list-title">📄 Document List</h1>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="documents-list-container">
+                <div class="list-header">
+                    <h2 class="list-subtitle" id="list-subtitle">Select a document to view</h2>
+                </div>
+                <div class="documents-list" id="documents-list">
+                    <!-- Documents will be populated here -->
                 </div>
             </div>
         </div>
@@ -557,6 +697,164 @@
             constructor() {
                 this.currentDocument = null;
                 this.pdfViewer = null;
+                this.currentPage = 'landing'; // 'landing', 'list', 'viewer'
+                this.valueChainDocuments = [
+                    {
+                        id: 'aquaculture-guide',
+                        name: 'AQUACULTURE GUIDE',
+                        description: 'Comprehensive guide to aquaculture best practices and management',
+                        path: 'value-chain/AQUACULTURE_GUIDE.pdf',
+                        icon: '🐟'
+                    },
+                    {
+                        id: 'aquaculture-manual',
+                        name: 'AQUACULTURE MANUAL',
+                        description: 'Detailed manual for aquaculture operations and procedures',
+                        path: 'value-chain/AQUACULTURE_MANUAL.pdf',
+                        icon: '📘'
+                    },
+                    {
+                        id: 'avocado-guide',
+                        name: 'AVOCADO GUIDE',
+                        description: 'Best practices for avocado farming and quality management',
+                        path: 'value-chain/AVOCADO_GUIDE.pdf',
+                        icon: '🥑'
+                    },
+                    {
+                        id: 'avocado-manual',
+                        name: 'AVOCADO MANUAL',
+                        description: 'Technical manual for avocado cultivation and post-harvest handling',
+                        path: 'value-chain/AVOCADO_MANUAL.pdf',
+                        icon: '📗'
+                    },
+                    {
+                        id: 'banana-strategy',
+                        name: 'BANANA COMMERCIALIZATION STRATEGY FOR KISII COUNTY',
+                        description: 'Strategic plan for banana commercialization and market expansion in Kisii County',
+                        path: 'value-chain/BANANA_COMMERCIALIZATION_STRATEGY_FOR_KISII_COUNTY.pdf',
+                        icon: '📊'
+                    },
+                    {
+                        id: 'banana-guide',
+                        name: 'BANANA GUIDE',
+                        description: 'Guidelines for banana cultivation and quality control',
+                        path: 'value-chain/BANANA_GUIDE.pdf',
+                        icon: '🍌'
+                    },
+                    {
+                        id: 'banana-manual',
+                        name: 'BANANA MANUAL',
+                        description: 'Operational manual for banana farming and processing',
+                        path: 'value-chain/BANANA_MANUAL.pdf',
+                        icon: '📙'
+                    },
+                    {
+                        id: 'cassava-guide',
+                        name: 'CASSAVA GUIDE',
+                        description: 'Guidelines for cassava cultivation and pest management',
+                        path: 'value-chain/CASSAVA_GUIDE.pdf',
+                        icon: '🌿'
+                    },
+                    {
+                        id: 'cassava-manual',
+                        name: 'CASSAVA MANUAL',
+                        description: 'Manual for cassava farming techniques and processing',
+                        path: 'value-chain/CASSAVA_MANUAL.pdf',
+                        icon: '📒'
+                    },
+                    {
+                        id: 'chicken-guide',
+                        name: 'CHICKEN GUIDE',
+                        description: 'Best practices for poultry farming and disease control',
+                        path: 'value-chain/CHICKEN_GUIDE.pdf',
+                        icon: '🐔'
+                    },
+                    {
+                        id: 'chicken-manual',
+                        name: 'CHICKEN MANUAL',
+                        description: 'Detailed manual for poultry production and management',
+                        path: 'value-chain/CHICKEN_MANUAL.pdf',
+                        icon: '📕'
+                    },
+                    {
+                        id: 'coconut-guide',
+                        name: 'COCONUT GUIDE',
+                        description: 'Guidelines for coconut cultivation and product utilization',
+                        path: 'value-chain/COCONUT_GUIDE.pdf',
+                        icon: '🥥'
+                    },
+                    {
+                        id: 'coconut-manual',
+                        name: 'COCONUT MANUAL',
+                        description: 'Technical manual for coconut farming and processing',
+                        path: 'value-chain/COCONUT_MANUAL.pdf',
+                        icon: '📘'
+                    },
+                    {
+                        id: 'dairy-guide',
+                        name: 'DAIRY GUIDE',
+                        description: 'Guide to dairy cattle management and milk production',
+                        path: 'value-chain/DAIRY_GUIDE.pdf',
+                        icon: '🐄'
+                    },
+                    {
+                        id: 'dairy-manual',
+                        name: 'DAIRY MANUAL',
+                        description: 'Manual for dairy farm operations and milk processing',
+                        path: 'value-chain/DAIRY_MANUAL.pdf',
+                        icon: '📔'
+                    },
+                    {
+                        id: 'export-vegetable-guide',
+                        name: 'EXPORT VEGETABLE GUIDE',
+                        description: 'Guidelines for vegetable export standards and logistics',
+                        path: 'value-chain/EXPORT_VEGETABLE_GUIDE.pdf',
+                        icon: '🥦'
+                    },
+                    {
+                        id: 'export-vegetable-manual',
+                        name: 'EXPORT VEGETABLE MANUAL',
+                        description: 'Manual for export vegetable production and handling',
+                        path: 'value-chain/EXPORT_VEGETABLE_MANUAL.pdf',
+                        icon: '📙'
+                    },
+                    {
+                        id: 'mango-manual',
+                        name: 'MANGO MANUAL',
+                        description: 'Manual for mango cultivation and post-harvest care',
+                        path: 'value-chain/MANGO_MANUAL.pdf',
+                        icon: '🥭'
+                    },
+                    {
+                        id: 'moringa-guide',
+                        name: 'MORINGA GUIDE',
+                        description: 'Guide to moringa cultivation and nutritional benefits',
+                        path: 'value-chain/MORINGA_GUIDE.pdf',
+                        icon: '🌱'
+                    },
+                    {
+                        id: 'moringa-manual',
+                        name: 'MORINGA MANUAL',
+                        description: 'Manual for moringa farming and processing',
+                        path: 'value-chain/MORINGA_MANUAL.pdf',
+                        icon: '📗'
+                    },
+                    {
+                        id: 'pineapple-guide',
+                        name: 'PINEAPPLE GUIDE',
+                        description: 'Guide to pineapple cultivation and quality control',
+                        path: 'value-chain/PINEAPPLE_GUIDE.pdf',
+                        icon: '🍍'
+                    },
+                    {
+                        id: 'pineapple-manual',
+                        name: 'PINEAPPLE MANUAL',
+                        description: 'Manual for pineapple production and post-harvest handling',
+                        path: 'value-chain/PINEAPPLE_MANUAL.pdf',
+                        icon: '📘'
+                    }
+
+                ];
                 this.initializePortal();
             }
             
@@ -568,6 +866,7 @@
             openDocument(docId, title, pdfPath) {
                 // Hide landing page and show PDF viewer
                 document.getElementById('landing-page').style.display = 'none';
+                document.getElementById('document-list-page').classList.remove('active');
                 document.getElementById('pdf-viewer-page').classList.add('active');
                 
                 // Update document title
@@ -576,20 +875,78 @@
                 // Initialize PDF viewer for this document
                 this.pdfViewer = new ContinuousPDFViewer(pdfPath);
                 this.currentDocument = { id: docId, title, path: pdfPath };
+                this.currentPage = 'viewer';
+            }
+            
+            openDocumentList(category, title) {
+                // Hide landing page and show document list
+                document.getElementById('landing-page').style.display = 'none';
+                document.getElementById('pdf-viewer-page').classList.remove('active');
+                document.getElementById('document-list-page').classList.add('active');
+                
+                // Update list title
+                document.getElementById('list-title').textContent = `⛓️ ${title}`;
+                document.getElementById('list-subtitle').textContent = 'Select a document to view';
+                
+                // Populate document list based on category
+                this.populateDocumentList(category);
+                this.currentPage = 'list';
+            }
+            
+            populateDocumentList(category) {
+                const listContainer = document.getElementById('documents-list');
+                listContainer.innerHTML = '';
+                
+                let documents = [];
+                if (category === 'value-chain') {
+                    documents = this.valueChainDocuments;
+                }
+                
+                documents.forEach(doc => {
+                    const documentItem = document.createElement('div');
+                    documentItem.className = 'document-item';
+                    documentItem.onclick = () => this.openDocument(doc.id, doc.name, doc.path);
+                    
+                    documentItem.innerHTML = `
+                        <div class="document-icon">${doc.icon}</div>
+                        <div class="document-details">
+                            <div class="document-name">${doc.name}</div>
+                            <div class="document-description">${doc.description}</div>
+                        </div>
+                        <div class="document-arrow">→</div>
+                    `;
+                    
+                    listContainer.appendChild(documentItem);
+                });
             }
             
             goBackToLanding() {
-                // Show landing page and hide PDF viewer
+                // Show landing page and hide other pages
                 document.getElementById('landing-page').style.display = 'flex';
+                document.getElementById('document-list-page').classList.remove('active');
                 document.getElementById('pdf-viewer-page').classList.remove('active');
                 
-                // Clean up PDF viewer
+                // Clean up PDF viewer if active
                 if (this.pdfViewer) {
                     this.pdfViewer.cleanup();
                     this.pdfViewer = null;
                 }
                 
                 this.currentDocument = null;
+                this.currentPage = 'landing';
+            }
+            
+            goBackToPreviousPage() {
+                if (this.currentPage === 'viewer') {
+                    // Go back to document list if we came from there
+                    if (this.currentDocument && this.currentDocument.id.includes('value-chain')) {
+                        this.openDocumentList('value-chain', 'Value Chain Manuals and Guides');
+                    } else {
+                        this.goBackToLanding();
+                    }
+                } else if (this.currentPage === 'list') {
+                    this.goBackToLanding();
+                }
             }
         }
 
@@ -812,7 +1169,7 @@
                         break;
                     case 'Escape':
                         event.preventDefault();
-                        documentPortal.goBackToLanding();
+                        documentPortal.goBackToPreviousPage();
                         break;
                 }
             }
@@ -859,8 +1216,16 @@
             documentPortal.openDocument(docId, title, pdfPath);
         }
 
+        function openDocumentList(category, title) {
+            documentPortal.openDocumentList(category, title);
+        }
+
         function goBackToLanding() {
             documentPortal.goBackToLanding();
+        }
+
+        function goBackToPreviousPage() {
+            documentPortal.goBackToPreviousPage();
         }
 
         // Initialize the portal when the page loads
