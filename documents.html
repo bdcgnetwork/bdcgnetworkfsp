@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Annual Report</title>
+    <title>Document Portal</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         * {
@@ -20,6 +20,151 @@
             flex-direction: column;
         }
 
+        /* Landing Page Styles */
+        .landing-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .landing-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .landing-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-subtitle {
+            font-size: 1.2rem;
+            color: #657786;
+            font-weight: 400;
+        }
+
+        .documents-grid {
+            flex: 1;
+            padding: 3rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .document-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .document-card:hover::before {
+            left: 100%;
+        }
+
+        .document-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #657786;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .card-type {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .card-arrow {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .document-card:hover .card-arrow {
+            transform: translateX(4px);
+        }
+
+        /* PDF Viewer Styles */
+        .pdf-viewer-page {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .pdf-viewer-page.active {
+            display: flex;
+        }
+
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -30,6 +175,32 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .title {
@@ -220,11 +391,32 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .landing-title {
+                font-size: 2rem;
+            }
+
+            .documents-grid {
+                padding: 2rem 1rem;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .document-card {
+                padding: 1.5rem;
+            }
+
             .header {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 0.75rem;
                 padding: 0.75rem;
+            }
+
+            .header-left {
+                justify-content: center;
             }
 
             .controls {
@@ -276,43 +468,133 @@
     </style>
 </head>
 <body>
-    <div class="page-progress" id="page-progress"></div>
-    
-    <div class="header">
-        <h1 class="title">📄 Annual Report</h1>
+    <!-- Landing Page -->
+    <div class="landing-page" id="landing-page">
+        <div class="landing-header">
+            <h1 class="landing-title">📚 Document Portal</h1>
+            <p class="landing-subtitle">Access your important documents with ease</p>
+        </div>
         
-        <div class="controls">
-            <div class="document-info" id="document-info">
-                Loading document...
-            </div>
-            
-            <div class="zoom-controls">
-                <button id="zoom-out" class="control-btn zoom-btn" disabled>−</button>
-                <div class="zoom-display" id="zoom-level">100%</div>
-                <button id="zoom-in" class="control-btn zoom-btn" disabled>+</button>
-                <button id="fit-width" class="control-btn" disabled title="Fit Width">⊡</button>
-            </div>
-            
-            <div class="scroll-indicator">
-                📜 Scroll to read more
+        <div class="documents-grid">
+            <div class="grid-container">
+                <div class="document-card" onclick="openDocument('doc1', 'Annual Report 2024', 'AnnualReport2024.pdf')">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Annual Report</h3>
+                    <p class="card-description">Annual Report 2024 - Comprehensive overview of our company's performance, achievements, and financial highlights from the past year.</p>
+                    <div class="card-footer">
+                        <span class="card-type">Annual Report</span>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </div>
+                
+                <div class="document-card" onclick="openDocument('doc2', 'Mespt Profile', 'profile.pdf')">
+                    <span class="card-icon">🏢</span>
+                    <h3 class="card-title">Mespt Profile</h3>
+                    <p class="card-description">Mespt Profile - Forward-looking document outlining our vision, objectives, and roadmap for sustainable growth.</p>
+                    <div class="card-footer">
+                        <span class="card-type">Profile</span>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </div>
+                
+                <div class="document-card" onclick="openDocument('doc3', 'Value Chain Manual and Guides', 'valuechain.pdf')">
+                    <span class="card-icon">⛓️</span>
+                    <h3 class="card-title">Value Chain Manual and Guides</h3>
+                    <p class="card-description">Value Chain Manual and Guides - </p>
+                    <div class="card-footer">
+                        <span class="card-type">Manual and Guides</span>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="pdf-container">
-            <div class="pdf-viewer" id="pdf-viewer">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Loading document...</p>
+    <!-- PDF Viewer Page -->
+    <div class="pdf-viewer-page" id="pdf-viewer-page">
+        <div class="page-progress" id="page-progress"></div>
+        
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBackToLanding()">
+                    ← Back
+                </button>
+                <h1 class="title" id="document-title">📄 Document Viewer</h1>
+            </div>
+            
+            <div class="controls">
+                <div class="document-info" id="document-info">
+                    Loading document...
+                </div>
+                
+                <div class="zoom-controls">
+                    <button id="zoom-out" class="control-btn zoom-btn" disabled>−</button>
+                    <div class="zoom-display" id="zoom-level">100%</div>
+                    <button id="zoom-in" class="control-btn zoom-btn" disabled>+</button>
+                    <button id="fit-width" class="control-btn" disabled title="Fit Width">⊡</button>
+                </div>
+                
+                <div class="scroll-indicator">
+                    📜 Scroll to read more
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="pdf-container">
+                <div class="pdf-viewer" id="pdf-viewer">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading document...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        class ContinuousPDFViewer {
+        class DocumentPortal {
             constructor() {
+                this.currentDocument = null;
+                this.pdfViewer = null;
+                this.initializePortal();
+            }
+            
+            initializePortal() {
+                // Set PDF.js worker
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            }
+            
+            openDocument(docId, title, pdfPath) {
+                // Hide landing page and show PDF viewer
+                document.getElementById('landing-page').style.display = 'none';
+                document.getElementById('pdf-viewer-page').classList.add('active');
+                
+                // Update document title
+                document.getElementById('document-title').textContent = `📄 ${title}`;
+                
+                // Initialize PDF viewer for this document
+                this.pdfViewer = new ContinuousPDFViewer(pdfPath);
+                this.currentDocument = { id: docId, title, path: pdfPath };
+            }
+            
+            goBackToLanding() {
+                // Show landing page and hide PDF viewer
+                document.getElementById('landing-page').style.display = 'flex';
+                document.getElementById('pdf-viewer-page').classList.remove('active');
+                
+                // Clean up PDF viewer
+                if (this.pdfViewer) {
+                    this.pdfViewer.cleanup();
+                    this.pdfViewer = null;
+                }
+                
+                this.currentDocument = null;
+            }
+        }
+
+        class ContinuousPDFViewer {
+            constructor(pdfPath) {
                 this.pdfDoc = null;
                 this.scale = 1.0;
                 this.renderedPages = new Map();
@@ -320,41 +602,38 @@
                 this.currentViewPage = 1;
                 this.progressUpdatePending = false;
                 this.isRendering = false;
-                
-                // Replace with your PDF file path
-                this.pdfPath = 'AnnualReport2024.pdf';
+                this.pdfPath = pdfPath;
                 
                 this.initElements();
                 this.bindEvents();
                 this.loadPDF();
-                
-                // Set PDF.js worker
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
             }
             
             initElements() {
                 this.viewer = document.getElementById('pdf-viewer');
-                this.zoomIn = document.getElementById('zoom-in');
-                this.zoomOut = document.getElementById('zoom-out');
-                this.fitWidth = document.getElementById('fit-width');
+                this.zoomInBtn = document.getElementById('zoom-in');
+                this.zoomOutBtn = document.getElementById('zoom-out');
+                this.fitWidthBtn = document.getElementById('fit-width');
                 this.zoomLevel = document.getElementById('zoom-level');
                 this.documentInfo = document.getElementById('document-info');
                 this.pageProgress = document.getElementById('page-progress');
             }
             
             bindEvents() {
-                this.zoomIn.addEventListener('click', () => this.zoomIn());
-                this.zoomOut.addEventListener('click', () => this.zoomOut());
-                this.fitWidth.addEventListener('click', () => this.fitToWidth());
+                this.zoomInBtn.addEventListener('click', () => this.zoomIn());
+                this.zoomOutBtn.addEventListener('click', () => this.zoomOut());
+                this.fitWidthBtn.addEventListener('click', () => this.fitToWidth());
                 
                 // Scroll event for progress tracking
                 this.viewer.addEventListener('scroll', () => this.updateProgress());
                 
                 // Keyboard shortcuts
-                document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+                this.keyboardHandler = (e) => this.handleKeyboard(e);
+                document.addEventListener('keydown', this.keyboardHandler);
                 
                 // Window resize
-                window.addEventListener('resize', () => this.handleResize());
+                this.resizeHandler = () => this.handleResize();
+                window.addEventListener('resize', this.resizeHandler);
             }
             
             async loadPDF() {
@@ -370,7 +649,7 @@
                     await this.renderAllPages();
                     
                 } catch (error) {
-                    this.showError('Failed to load the document. Please check your connection and try refreshing the page.');
+                    this.showError('Failed to load the document. Please check that the PDF file exists.');
                     console.error('PDF loading error:', error);
                 }
             }
@@ -425,7 +704,6 @@
             updateProgress() {
                 if (!this.viewer || this.totalPages === 0) return;
                 
-                // Use requestAnimationFrame to throttle scroll updates
                 if (this.progressUpdatePending) return;
                 this.progressUpdatePending = true;
                 
@@ -436,7 +714,6 @@
                     
                     this.pageProgress.style.width = `${progress}%`;
                     
-                    // Update current page based on scroll position (throttled)
                     const pages = this.viewer.querySelectorAll('.pdf-page');
                     let currentPage = 1;
                     
@@ -477,9 +754,9 @@
             }
             
             enableControls() {
-                this.zoomIn.disabled = false;
-                this.zoomOut.disabled = false;
-                this.fitWidth.disabled = false;
+                this.zoomInBtn.disabled = false;
+                this.zoomOutBtn.disabled = false;
+                this.fitWidthBtn.disabled = false;
             }
             
             updateZoomDisplay() {
@@ -503,7 +780,7 @@
             async fitToWidth() {
                 if (!this.pdfDoc || this.isRendering) return;
                 
-                const viewerWidth = this.viewer.clientWidth - 64; // Account for padding
+                const viewerWidth = this.viewer.clientWidth - 64;
                 const page = await this.pdfDoc.getPage(1);
                 const viewport = page.getViewport({scale: 1.0});
                 
@@ -533,6 +810,10 @@
                         event.preventDefault();
                         this.viewer.scrollTop = this.viewer.scrollHeight;
                         break;
+                    case 'Escape':
+                        event.preventDefault();
+                        documentPortal.goBackToLanding();
+                        break;
                 }
             }
             
@@ -542,15 +823,50 @@
                     if (this.pdfDoc && !this.isRendering) {
                         this.renderAllPages();
                     }
-                }, 500); // Increased debounce time
+                }, 500);
+            }
+            
+            cleanup() {
+                // Remove event listeners
+                if (this.keyboardHandler) {
+                    document.removeEventListener('keydown', this.keyboardHandler);
+                }
+                if (this.resizeHandler) {
+                    window.removeEventListener('resize', this.resizeHandler);
+                }
+                
+                // Clear timeouts
+                if (this.resizeTimeout) {
+                    clearTimeout(this.resizeTimeout);
+                }
+                
+                // Reset progress bar
+                if (this.pageProgress) {
+                    this.pageProgress.style.width = '0%';
+                }
+                
+                // Clear viewer
+                if (this.viewer) {
+                    this.viewer.innerHTML = '';
+                }
             }
         }
-        
-        // Initialize the PDF viewer when the page loads
+
+        // Global functions for navigation
+        let documentPortal;
+
+        function openDocument(docId, title, pdfPath) {
+            documentPortal.openDocument(docId, title, pdfPath);
+        }
+
+        function goBackToLanding() {
+            documentPortal.goBackToLanding();
+        }
+
+        // Initialize the portal when the page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new ContinuousPDFViewer();
+            documentPortal = new DocumentPortal();
         });
     </script>
 </body>
 </html>
-
