@@ -320,6 +320,33 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .download-btn {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .download-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -607,7 +634,7 @@
                 <div class="document-card" onclick="openDocument('doc2', 'Company Profile', 'profile.pdf')">
                     <span class="card-icon">🏢</span>
                     <h3 class="card-title">MESPT Profile</h3>
-                    <p class="card-description">MESPT Profile - The MESPT Profile presents the organization’s mandate, achievements, and it programmes.</p>
+                    <p class="card-description">MESPT Profile - The MESPT Profile presents the organization's mandate, achievements, and it programmes.</p>
                     <div class="card-footer">
                         <span class="card-type">MESPT Profile</span>
                         <div class="card-arrow">→</div>
@@ -617,7 +644,7 @@
                 <div class="document-card" onclick="openDocumentList('value-chain', 'Value Chain Manuals and Guides')">
                     <span class="card-icon">⛓️</span>
                     <h3 class="card-title">Value Chain Manuals and Guides</h3>
-                    <p class="card-description">Value Chain Manuals and Guides - These are training and reference materials for various value chains.</p>
+                    <p class="card-description">Value Chain Manuals and Guides - These are training and reference materials for various value chains.</p>
                     <div class="card-footer">
                         <span class="card-type">Value Chain Manuals and Guides</span>
                         <div class="card-arrow">→</div>
@@ -658,6 +685,9 @@
             <div class="header-left">
                 <button class="back-btn" onclick="goBackToLanding()">
                     ← Back
+                </button>
+                <button class="download-btn" id="download-btn" onclick="downloadDocument()" disabled>
+                    ⬇ Download
                 </button>
                 <h1 class="title" id="document-title">📄 Document Viewer</h1>
             </div>
@@ -948,6 +978,20 @@
                     this.goBackToLanding();
                 }
             }
+            
+            downloadDocument() {
+                if (!this.currentDocument) return;
+                
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.href = this.currentDocument.path;
+                link.download = this.currentDocument.title + '.pdf';
+                
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
 
         class ContinuousPDFViewer {
@@ -974,6 +1018,7 @@
                 this.zoomLevel = document.getElementById('zoom-level');
                 this.documentInfo = document.getElementById('document-info');
                 this.pageProgress = document.getElementById('page-progress');
+                this.downloadBtn = document.getElementById('download-btn');
             }
             
             bindEvents() {
@@ -1114,6 +1159,7 @@
                 this.zoomInBtn.disabled = false;
                 this.zoomOutBtn.disabled = false;
                 this.fitWidthBtn.disabled = false;
+                this.downloadBtn.disabled = false;
             }
             
             updateZoomDisplay() {
@@ -1170,6 +1216,12 @@
                     case 'Escape':
                         event.preventDefault();
                         documentPortal.goBackToPreviousPage();
+                        break;
+                    case 's':
+                        if (event.ctrlKey || event.metaKey) {
+                            event.preventDefault();
+                            documentPortal.downloadDocument();
+                        }
                         break;
                 }
             }
@@ -1228,6 +1280,10 @@
             documentPortal.goBackToPreviousPage();
         }
 
+        function downloadDocument() {
+            documentPortal.downloadDocument();
+        }
+
         // Initialize the portal when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             documentPortal = new DocumentPortal();
@@ -1235,4 +1291,3 @@
     </script>
 </body>
 </html>
-
